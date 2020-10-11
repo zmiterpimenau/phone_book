@@ -34,12 +34,20 @@ class User(Base):
                 i.name = new_name
         session.commit()
         return User.name
-
-
     
     @classmethod
     def all(cls):
         return session.query(cls).all()
+
+    @classmethod
+    def only_one(cls, name):
+        users = session.query(cls).all()
+        answer = ''
+        for i in users:
+            if i.name == name:
+                answer = i.new_name
+        return answer
+
 
 
 class Phone(Base):

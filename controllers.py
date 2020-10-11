@@ -14,6 +14,17 @@ def all_users_controller(data=None, cls=True):
     input("Продолжить? ")
     return 'main', None
 
+def show_user_controller(data=None, cls=True):
+    users=User.all()
+    render_template(context={'users':users}, template="show_user.jinja2", cls=cls)
+    username = input("Введите имя пользователя: ")
+    for i in users:
+        if i.name == username:
+            render_template(context={'user':i.name, 'phones':i.phones}, template="show_user2.jinja2", cls=cls)
+    input("Продолжить? ")
+    return 'main', None
+
+
 def add_user_controller(data=None, cls=True):
     render_template(context={}, template="add_user.jinja2", cls=cls)
     username = input()
@@ -37,8 +48,7 @@ def update_user_controller(data=None, cls=True):
     users=User.all()
     render_template(context={'users': users}, template="update_name1.jinja2", cls=cls)
     old_name = input()
-    render_template(context={}, template="update_name2.jinja2", cls=cls)
-    new_name = input()
+    new_name = input("Новое имя: ")
     user = User.update(old_name, new_name)
     return '1', user
 
@@ -51,7 +61,7 @@ controllers_dict = {
     '2': add_user_controller,
     '3': update_user_controller,
 #   '4': delete_user_controller,
-#   '5': show_user_controller,
+    '5': show_user_controller,
     21: add_phone_controller,
     212: add_more_controller
 }
