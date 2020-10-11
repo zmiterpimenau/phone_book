@@ -25,6 +25,17 @@ class User(Base):
         session.add(user)
         session.commit()
         return user
+
+    @classmethod
+    def update(cls, old_name, new_name):
+        users = session.query(User).all()
+        for i in users:
+            if i.name == old_name:
+                i.name = new_name
+        session.commit()
+        return User.name
+
+
     
     @classmethod
     def all(cls):

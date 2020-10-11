@@ -33,6 +33,15 @@ def add_more_controller(user, cls=True):
         return 21, user
     return 51, user
 
+def update_user_controller(data=None, cls=True):
+    users=User.all()
+    render_template(context={'users': users}, template="update_name1.jinja2", cls=cls)
+    old_name = input()
+    render_template(context={}, template="update_name2.jinja2", cls=cls)
+    new_name = input()
+    user = User.update(old_name, new_name)
+    return '1', user
+
 def get_controller(state):
     return controllers_dict.get(state, default_controller)
 
@@ -40,7 +49,7 @@ controllers_dict = {
     '0': exit_controller,
     '1': all_users_controller,
     '2': add_user_controller,
-#   '3': update_user_controller,
+    '3': update_user_controller,
 #   '4': delete_user_controller,
 #   '5': show_user_controller,
     21: add_phone_controller,
