@@ -44,6 +44,14 @@ def add_more_controller(user, cls=True):
         return 21, user
     return 51, user
 
+# Удаляет имя, но не удаляет связанные номера. Нужна доработка
+def delete_user_controller(data=None, cls=True):
+    users=User.all()
+    render_template(context={'users': users}, template="delete_user.jinja2", cls=cls)
+    username = input("Введите имя пользователя, которого нужно удалить: ")
+    user = User.delete(username)
+    return '1', user
+
 def update_user_controller(data=None, cls=True):
     users=User.all()
     request = input('Введите 1, если хотите изменить имя; любую другую клавишу - если хотите изменить номер: ')
@@ -76,7 +84,7 @@ controllers_dict = {
     '1': all_users_controller,
     '2': add_user_controller,
     '3': update_user_controller,
-#   '4': delete_user_controller,
+    '4': delete_user_controller,
     '5': show_user_controller,
     21: add_phone_controller,
     212: add_more_controller

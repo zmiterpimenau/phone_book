@@ -27,6 +27,13 @@ class User(Base):
         return user
 
     @classmethod
+    def delete(cls, name):
+        user = cls(name=name)
+        session.query(User).filter(User.name==name).delete()
+        session.commit()
+        return user
+
+    @classmethod
     def update(cls, old_name, new_name):
         users = session.query(User).all()
         for i in users:
