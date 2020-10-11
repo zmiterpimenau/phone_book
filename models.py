@@ -66,6 +66,19 @@ class Phone(Base):
         session.add(phone)
         session.commit()
         return phone
+    
+    @classmethod
+    def all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def update(cls, old_phone, new_phone):
+        phones = session.query(Phone).all()
+        for i in phones:
+            if i.phone == old_phone:
+                i.phone = new_phone
+        session.commit()
+        return Phone.phone
 
 
 Base.metadata.create_all(engine)

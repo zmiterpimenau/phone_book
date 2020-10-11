@@ -46,11 +46,27 @@ def add_more_controller(user, cls=True):
 
 def update_user_controller(data=None, cls=True):
     users=User.all()
-    render_template(context={'users': users}, template="update_name1.jinja2", cls=cls)
-    old_name = input()
-    new_name = input("Новое имя: ")
-    user = User.update(old_name, new_name)
-    return '1', user
+    request = input('Введите 1, если хотите изменить имя; любую другую клавишу - если хотите изменить номер: ')
+    if request == '1':
+        render_template(context={'users': users}, template="update_name1.jinja2", cls=cls)
+        old_name = input()
+        new_name = input("Новое имя: ")
+        user = User.update(old_name, new_name)
+        return '1', user
+    else:
+        render_template(context={'users': users}, template="update_name2.jinja2", cls=cls)
+        username = input("Введите имя пользователя, чей номер Вы бы хотели изменить: ")
+        phones = Phone.all()
+        for i in range(len(users)):
+            if users[i].name == username:
+                numbers_line = ''
+                for k in users[i].phones:
+                    numbers_line = numbers_line + k.phone + ' '
+                print(f'Номера, принадлежащие пользователю {users[i].name}: {numbers_line}')
+        old_phone = input("Введите номер, который хотите изменить: ")
+        new_phone = input("Новый номер: ")
+        phone = Phone.update(old_phone, new_phone)
+        return '1', phone  
 
 def get_controller(state):
     return controllers_dict.get(state, default_controller)
