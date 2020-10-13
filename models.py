@@ -14,7 +14,7 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     name = Column(String(250))
-    phones = relationship("Phone", back_populates="user", cascade="all, delete-orphan")
+    phones = relationship("Phone", back_populates="user", cascade = "all, delete, delete-orphan")
 
     def __str__(self):
         return self.name

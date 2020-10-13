@@ -44,7 +44,6 @@ def add_more_controller(user, cls=True):
         return 21, user
     return 51, user
 
-# Удаляет имя, но не удаляет связанные номера. Нужна доработка
 def delete_user_controller(data=None, cls=True):
     users=User.all()
     render_template(context={'users': users}, template="delete_user.jinja2", cls=cls)
